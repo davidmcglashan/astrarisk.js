@@ -1,11 +1,49 @@
+body {
+	font-family: 'MuseoModerno';
+	overflow: hidden;
+}
+
 #backcloth {
 	background: #004;
 	z-index: -100;
 }
 
-#gameover,
+#gameover {
+	display: block;
+	top: 25%;
+	width: 100%;
+	padding: 3em 0em;
+	background: rgba(0,0,0,0.5);
+	text-align: center;
+	color: #fff;
+}
+
 #booth {
 	color: #fff;
+	text-align: center;
+	top: 25%;
+	display: block;
+}
+
+h1 {
+	font-size: 4em;
+}
+h2 {
+	margin-top: 3em;
+}
+
+a {
+	padding: 0.5em 1em;
+	border-radius: 0.5em;
+	color: black;
+	text-decoration: none;	
+}
+
+a.primary {
+	background: white;
+}
+a.secondary {
+	background: #aaaaff;
 }
 
 #gameover,
@@ -13,6 +51,7 @@
 #game {
 	display: none;
 	position: absolute;
+	overflow: hidden;
 }
 
 .fullscreen {
