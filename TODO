@@ -1,26 +1,19 @@
 TODO
 ====
 
-- speed should be a function of width? i.e. it always takes 5 seconds to cross irrespective of width
-
-Draw stars
-- random centre, random(36) for rotation
-- 10 points, 36 degrees apart
-- every second point is 2 to 1.5 times further away
-- plot path, fill shape
-- draw frame on same canvas below the game
+speed should be a function of width? i.e. it always takes 5 seconds to cross irrespective of width
 
 Collide with stars!
-
-Level counter
 
 Track high scores
 - keep in localstorage
 - different score per screen dimensions
 
 decent booth
+- scales with size and not too tall or wide
 
-- countdown loop
+countdown loop
+- progress bar with anim (draw the stars, show "get ready", progress bar)
 
 Animate level transitions
 spacey backgrounds
