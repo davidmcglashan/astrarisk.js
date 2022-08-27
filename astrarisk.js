@@ -37,11 +37,11 @@ function beam( delta ) {
     wasPressing = isPressing
 
     // Move the beam
-    beamPos.x += delta/2
+    beamPos.x += delta*tick
     if ( isPressing ) {
-        beamPos.y -= delta/2
+        beamPos.y -= delta*tick
     } else {
-        beamPos.y += delta/2
+        beamPos.y += delta*tick
     }
 
     // Have we gone through the aperture or into the wall?
@@ -138,14 +138,19 @@ function paintStars() {
 
 // ==============================================================================================
 // Game loop stuff!
-// Tracks the time difference between frame updates.
 // ==============================================================================================
+
+// Tracks the time difference between frame updates. Tick is how far the beam should advance
+// in 1 millisecond
 var lastRender = 0
+var tick = 0
 
 // Main game loop function. 
 // Very simple: work out time diff, update everything, paint everything, repeat until death
 // =======================
 function loop( now ) {
+    console.log( now )
+
     // Move the beam along and repaint the canvas
     isGameOver = beam( now - lastRender )
     paintBeam()
@@ -208,6 +213,7 @@ function initState( timestamp ) {
     newBeam()
 
     lastRender = timestamp
+    tick = width/5000
     window.requestAnimationFrame( loop )    
 }
 
