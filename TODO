@@ -9,9 +9,6 @@ Track high scores
 - keep in localstorage
 - different score per screen dimensions
 
-decent booth
-- scales with size and not too tall or wide
-
 countdown loop
 - progress bar with anim (draw the stars, show "get ready", progress bar)
 

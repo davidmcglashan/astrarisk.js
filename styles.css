@@ -14,9 +14,15 @@ body {
 	transform: translateY(-50%);
 	width: 100%;
 	padding: 0 0 2em 0;
-	background: rgba(0,0,0,0.5);
+	background: rgba(0,0,0,0.65);
 	text-align: center;
 	color: #fff;
+}
+
+#gameover p {
+	margin-top: -1em;
+	padding: 1em;
+	font-size: 1.5em;
 }
 
 #booth {

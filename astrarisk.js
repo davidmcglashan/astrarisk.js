@@ -214,6 +214,9 @@ function initState( timestamp ) {
 // End the game!
 // ===============
 function gameOver() {
+    var levelSpan = document.getElementById( 'level' )
+    levelSpan.innerHTML = level
+
     // Show the game over screen ...
     gameover.style.display = 'block';
 }
