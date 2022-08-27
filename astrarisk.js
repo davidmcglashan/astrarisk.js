@@ -250,3 +250,5 @@ function isPressing( e ) {
 // Update state when the mouse buttons are pressed or released.
 document.addEventListener( "mousedown", isPressing );
 document.addEventListener( "mouseup", isPressing );
+document.addEventListener( "touchstart", function() { isPressing = true } )
+document.addEventListener( "touchend", function() { isPressing = false } )
