@@ -18,7 +18,5 @@ other effects
 
 mobile
 - Always in landscape?
-- Game doesn't respond to touch
-  - https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
 - is there a way to get rid of browser chrome on iOS?
   - https://stackoverflow.com/questions/4117377/how-do-i-hide-the-address-bar-on-iphone
