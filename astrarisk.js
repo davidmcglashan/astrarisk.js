@@ -12,6 +12,9 @@ var stars = document.getElementById( 'stars' )
 // Globals for screen dimensions, etc.
 var width = 0;
 var height = 0;
+var margin = 0;
+var aperture = 0;
+
 var beamPos = {
     x: 0,
     y: 0
@@ -31,21 +34,28 @@ function beam( delta ) {
     }
     wasPressing = isPressing
 
-    // Move right
+    // Move the beam
     beamPos.x += delta/2
-    if ( beamPos.x > width ) {
-        newBeam()
-    }
-    
-    // Move up or down depending on mousey
     if ( isPressing ) {
         beamPos.y -= delta/2
     } else {
         beamPos.y += delta/2
     }
 
+    // Have we gone through the aperture or into the wall?
+    if ( beamPos.x >= width-margin ) {
+        // into the wall?
+        if ( beamPos.y < height/2 - aperture/2 || beamPos.y > height/2 + aperture/2 ) {
+            return true
+        }
+
+        // through the aperture!
+        newBeam()
+        return false
+    }
+    
     // Have we gone out of bounds top and bottom?
-    if ( beamPos.y < 0 || beamPos.y > height ) {
+    if ( beamPos.y <= margin || beamPos.y >= height-margin ) {
         return true
     }
 
@@ -66,7 +76,9 @@ function paintBeam() {
     gameGfx.beginPath();
     gameGfx.strokeStyle = "#40d060"
     gameGfx.lineWidth = 5
-    gameGfx.moveTo( 0, height/2 )
+
+    corner = beamPath[0]
+    gameGfx.moveTo( beamPath.x, beamPath.y )
 
     for ( const corner of beamPath ) {
         gameGfx.lineTo( corner.x, corner.y )
@@ -84,10 +96,10 @@ function paintStars() {
     starGfx.lineWidth = 5
 
     starGfx.beginPath()
-    starGfx.rect( 10, 10, width-20, height-20 )
+    starGfx.rect( margin, margin, width-2*margin, height-2*margin )
     starGfx.stroke()
 
-    starGfx.clearRect( 0, height/2 - 50, width, 100 );
+    starGfx.clearRect( 0, height/2 - aperture/2, width, aperture );
 }
 
 // ==============================================================================================
@@ -120,6 +132,7 @@ function play() {
     stars.style.display = 'block';
     booth.style.display = 'none';
     gameover.style.display = 'none';
+    beamPos.y = 0
 
     // kick off the game loops
     window.requestAnimationFrame( initState )    
@@ -128,8 +141,11 @@ function play() {
 // Reset the state of the beam and its path
 // ========================================
 function newBeam() {
-    beamPos.x = 0
-    beamPos.y = height / 2
+    beamPos.x = margin
+    if ( beamPos.y === 0 ) {
+        beamPos.y = height / 2
+    }
+
     beamPath = []
     var corner = {
         x: beamPos.x,
@@ -149,6 +165,10 @@ function initState( timestamp ) {
     game.height = height
     stars.width = width
     stars.height = height
+    
+    // margin and aperture depend on the screen dimensions
+    margin = width * 0.015
+    aperture = height * 0.2
 
     newBeam()
 

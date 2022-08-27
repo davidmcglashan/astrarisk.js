@@ -1,10 +1,7 @@
 TODO
 ====
 
-Guide beam to exit
 - speed should be a function of width? i.e. it always takes 5 seconds to cross irrespective of width
-- draw frame
-- check collisions with right hand wall
 
 Draw stars
 - random centre, random(36) for rotation
@@ -23,7 +20,6 @@ Track high scores
 
 decent booth
 
-Start game/stop game
 - countdown loop
 
 Animate level transitions
