@@ -5,7 +5,7 @@
 
 // refs for the major scene elements
 var gameover = document.getElementById( 'gameover' )
-var booth = document.getElementById( 'booth' )
+var kiosk = document.getElementById( 'kiosk' )
 var game = document.getElementById( 'game' )
 var stars = document.getElementById( 'stars' )
 
@@ -47,6 +47,8 @@ function beam( delta ) {
         beamPos.y += delta*tick
     }
 
+    // Have we collided with a star? Check for non-zero pixels in the space we've
+    // just moved through. This is _usually_ a tiny (2x2 or 3x3) square
     pxls = starGfx.getImageData( ox, oy, beamPos.x-ox, beamPos.y-oy ).data
     for ( i = 0; i < pxls.length; i++ ) {
         if ( pxls[i] != 0 ) {
@@ -174,10 +176,10 @@ function loop( now ) {
 // Start the game!
 // ===============
 function play() {
-    // Make the canvas visible, hide the booth ...
+    // Make the canvas visible, hide the kiosk ...
     game.style.display = 'block';
     stars.style.display = 'block';
-    booth.style.display = 'none';
+    kiosk.style.display = 'none';
     gameover.style.display = 'none';
     beamPos.y = 0
     level = 1
@@ -235,11 +237,11 @@ function gameOver() {
     gameover.style.display = 'block';
 }
 
-// Returns to the booth
+// Returns to the kiosk
 // ===============
 function back() {
     // Show the game over screen ...
-    booth.style.display = 'block';
+    kiosk.style.display = 'block';
     game.style.display = 'none';
     stars.style.display = 'none';
     gameover.style.display = 'none';

@@ -26,7 +26,7 @@ body {
 	font-size: 1.5em;
 }
 
-#booth {
+#kiosk {
 	position: absolute;
 	display: block;
 	overflow: hidden;
