@@ -14,7 +14,9 @@ var width = 0;
 var height = 0;
 var margin = 0;
 var aperture = 0;
+var level = 0;
 
+// Beam globals
 var beamPos = {
     x: 0,
     y: 0
@@ -50,6 +52,7 @@ function beam( delta ) {
         }
 
         // through the aperture!
+        level += 1
         newBeam()
         return false
     }
@@ -91,6 +94,7 @@ function paintBeam() {
 // Draws the stars
 // ===========================
 function paintStars() {
+    // Draw the frame
     starGfx.clearRect( 0, 0, width, height );
     starGfx.strokeStyle = "#40d060"
     starGfx.lineWidth = 5
@@ -99,7 +103,22 @@ function paintStars() {
     starGfx.rect( margin, margin, width-2*margin, height-2*margin )
     starGfx.stroke()
 
+    // Clear the aperture
     starGfx.clearRect( 0, height/2 - aperture/2, width, aperture );
+
+    // Now draw the stars
+    starGfx.strokeStyle = "#ddeeff"
+    starGfx.lineWidth = 1
+
+    for ( var i = 0; i < 10 + level*3; i++ ) {
+        x = Math.random() * (0.8 * width) + 0.1*width
+        y = Math.random() * (0.9 * height)
+        size = Math.random() * ( height * 0.05 ) + height * 0.05
+
+        starGfx.beginPath()
+        starGfx.rect( x, y, size, size )
+        starGfx.stroke()
+    }
 }
 
 // ==============================================================================================
@@ -133,6 +152,7 @@ function play() {
     booth.style.display = 'none';
     gameover.style.display = 'none';
     beamPos.y = 0
+    level = 1
 
     // kick off the game loops
     window.requestAnimationFrame( initState )    
