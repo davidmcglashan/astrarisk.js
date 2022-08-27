@@ -1,14 +1,13 @@
 // Obtain the canvas dimensions
-
-
 var elem = document.getElementById( 'game' )
-var gfx = elem.getContext( '2d' )
 var width = elem.offsetWidth;
 var height = elem.offsetHeight;
+elem.width = width
+elem.height = height
 
-  elem.width = width
-  elem.height = height
-
+// Global graphics context for the canvas
+var gfx = elem.getContext( '2d' )
+var lastRender = 0
 
 // Simple object to track the beam's position
 var state = {
@@ -27,8 +26,6 @@ function beam( delta ) {
     }
     
     state.y += delta/2
-
-    console.log( state )
 }
 
 // =======================
@@ -55,5 +52,4 @@ function loop( now ) {
     window.requestAnimationFrame( loop )
 }
 
-var lastRender = 0
-window.requestAnimationFrame( loop )
+//window.requestAnimationFrame( loop )
