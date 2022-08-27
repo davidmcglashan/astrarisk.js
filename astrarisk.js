@@ -107,17 +107,32 @@ function paintStars() {
     starGfx.clearRect( 0, height/2 - aperture/2, width, aperture );
 
     // Now draw the stars
-    starGfx.strokeStyle = "#ddeeff"
-    starGfx.lineWidth = 1
+    deg36 = 0.628319
 
-    for ( var i = 0; i < 10 + level*3; i++ ) {
-        x = Math.random() * (0.8 * width) + 0.1*width
-        y = Math.random() * (0.9 * height)
-        size = Math.random() * ( height * 0.05 ) + height * 0.05
+    for ( var i = 0; i < 100 + level*3; i++ ) {
+        x = Math.random() * (0.8 * width) + 0.15*width
+        y = Math.random() * (0.9 * height) + 0.05*height
+        size = Math.random() * ( height * 0.015 ) + height * 0.015
+        theta = Math.random() * deg36
 
         starGfx.beginPath()
-        starGfx.rect( x, y, size, size )
-        starGfx.stroke()
+        for ( var j=0; j<11; j++ ) {
+            dx = (j % 2 == 0 ? size : size/2) * Math.sin( theta )
+            dy = (j % 2 == 0 ? size : size/2) * Math.cos( theta )
+            theta += deg36
+
+            if ( i === 0 ) {
+                starGfx.moveTo( x+dx, y+dy )
+            } else {
+                starGfx.lineTo( x+dx, y+dy )
+            }
+        }
+
+        r = Math.floor(200+Math.random()*55)
+        g = Math.floor(200+Math.random()*55)
+        b = Math.floor(200+Math.random()*55)
+        starGfx.fillStyle = "rgba("+r+","+g+","+b+",0.8)"
+        starGfx.fill()
     }
 }
 
