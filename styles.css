@@ -1,6 +1,7 @@
 body {
 	font-family: 'MuseoModerno';
 	overflow: hidden;
+	user-select: none;
 }
 
 #backcloth {
