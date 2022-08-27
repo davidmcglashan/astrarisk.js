@@ -11,30 +11,40 @@ var game = document.getElementById( 'game' )
 // Globals for screen dimensions, etc.
 var width = 0;
 var height = 0;
-var state = {
+var beamPos = {
     x: 0,
     y: 0
 }
+var beamPath = []
 
 // Moves the beam
 // =====================
 function beam( delta ) {
+    // Add a new corner to the path if there has been a change in pressing state
+    if ( isPressing !== wasPressing ) {
+        var corner = {
+            x: beamPos.x,
+            y: beamPos.y
+        }
+        beamPath.push( corner )
+    }
+    wasPressing = isPressing
+
     // Move right
-    state.x += delta/2
-    if ( state.x > width ) {
-        state.x = 0
-        state.y = height/2
+    beamPos.x += delta/2
+    if ( beamPos.x > width ) {
+        newBeam()
     }
     
     // Move up or down depending on mousey
     if ( isPressing ) {
-        state.y -= delta/2
+        beamPos.y -= delta/2
     } else {
-        state.y += delta/2
+        beamPos.y += delta/2
     }
 
     // Have we gone out of bounds top and bottom?
-    if ( state.y < 0 || state.y > height ) {
+    if ( beamPos.y < 0 || beamPos.y > height ) {
         return true
     }
 
@@ -55,7 +65,12 @@ function paint() {
     gfx.strokeStyle = "#40d060"
     gfx.lineWidth = 5
     gfx.moveTo( 0, height/2 )
-    gfx.lineTo( state.x, state.y )
+
+    for ( const corner of beamPath ) {
+        gfx.lineTo( corner.x, corner.y )
+    }
+
+    gfx.lineTo( beamPos.x, beamPos.y )
     gfx.stroke()
 }
 
@@ -90,20 +105,32 @@ function play() {
     gameover.style.display = 'none';
 
     // kick off the game loops
-    window.requestAnimationFrame( initDisplay )    
+    window.requestAnimationFrame( initState )    
 }
 
-// Initialise the game display
+// Reset the state of the beam and its path
+// ========================================
+function newBeam() {
+    beamPos.x = 0
+    beamPos.y = height / 2
+    beamPath = []
+    var corner = {
+        x: beamPos.x,
+        y: beamPos.y
+    }
+    beamPath.push( corner )
+}
+
+// Initialise the game's state
 // ===========================
-function initDisplay( timestamp ) {
+function initState( timestamp ) {
     // update the dimensions now they're known
     width = game.offsetWidth;
     height = game.offsetHeight;
-
     game.width = width
     game.height = height
-    state.x = 0
-    state.y = height / 2
+
+    newBeam()
 
     lastRender = timestamp
     window.requestAnimationFrame( loop )    
@@ -134,6 +161,7 @@ function back() {
 
 // When true, someone is pressing the mouse/touching the screen
 var pressing = false;
+var wasPressing = false;
 
 // Determines if pressing is occurring or not. 
 // ==============================
