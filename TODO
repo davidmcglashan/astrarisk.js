@@ -1,0 +1,11 @@
+TODO
+====
+
+detect mouse events
+
+Start game/stop game
+- switch to non-game context
+- maybe a web page behind the canvas
+spacey backgrounds (transparent canvas?)
+
+Game loop
