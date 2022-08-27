@@ -1,18 +1,20 @@
 TODO
 ====
 
-detect mouse events
+decent booth
+- hide booth when game starts
 
 Start game/stop game
-- switch to non-game context
-- maybe a web page behind the canvas
-spacey backgrounds (transparent canvas?)
+- boundary detection which stops the game
+- countdown loop
 
 Game loop
 - stack of up/down points
 
 Guide beam to exit
 - speed should be a function of width? i.e. it always takes 5 seconds to cross irrespective of width
+
+spacey backgrounds
 
 Draw stars
 
