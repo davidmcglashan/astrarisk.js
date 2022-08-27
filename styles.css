@@ -9,8 +9,10 @@
 }
 
 #gameover,
+#stars,
 #game {
 	display: none;
+	position: absolute;
 }
 
 .fullscreen {

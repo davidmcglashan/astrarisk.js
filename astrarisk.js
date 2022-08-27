@@ -7,6 +7,7 @@
 var gameover = document.getElementById( 'gameover' )
 var booth = document.getElementById( 'booth' )
 var game = document.getElementById( 'game' )
+var stars = document.getElementById( 'stars' )
 
 // Globals for screen dimensions, etc.
 var width = 0;
@@ -53,25 +54,40 @@ function beam( delta ) {
 
 // ==============================================================================================
 // Graphics and painting stuff!
-// Global graphics context for the canvas
+// Global graphics contexts for the canvases
 // ==============================================================================================
-var gfx = game.getContext( '2d' )
+var gameGfx = game.getContext( '2d' )
+var starGfx = stars.getContext( '2d' )
 
 // Draws the beam
 // ===========================
-function paint() {
-    gfx.clearRect( 0, 0, width, height );
-    gfx.beginPath();
-    gfx.strokeStyle = "#40d060"
-    gfx.lineWidth = 5
-    gfx.moveTo( 0, height/2 )
+function paintBeam() {
+    gameGfx.clearRect( 0, 0, width, height );
+    gameGfx.beginPath();
+    gameGfx.strokeStyle = "#40d060"
+    gameGfx.lineWidth = 5
+    gameGfx.moveTo( 0, height/2 )
 
     for ( const corner of beamPath ) {
-        gfx.lineTo( corner.x, corner.y )
+        gameGfx.lineTo( corner.x, corner.y )
     }
 
-    gfx.lineTo( beamPos.x, beamPos.y )
-    gfx.stroke()
+    gameGfx.lineTo( beamPos.x, beamPos.y )
+    gameGfx.stroke()
+}
+
+// Draws the stars
+// ===========================
+function paintStars() {
+    starGfx.clearRect( 0, 0, width, height );
+    starGfx.strokeStyle = "#40d060"
+    starGfx.lineWidth = 5
+
+    starGfx.beginPath()
+    starGfx.rect( 10, 10, width-20, height-20 )
+    starGfx.stroke()
+
+    starGfx.clearRect( 0, height/2 - 50, width, 100 );
 }
 
 // ==============================================================================================
@@ -86,7 +102,7 @@ var lastRender = 0
 function loop( now ) {
     // Move the beam along and repaint the canvas
     isGameOver = beam( now - lastRender )
-    paint()
+    paintBeam()
 
     if ( !isGameOver ) {
         lastRender = now
@@ -101,6 +117,7 @@ function loop( now ) {
 function play() {
     // Make the canvas visible, hide the booth ...
     game.style.display = 'block';
+    stars.style.display = 'block';
     booth.style.display = 'none';
     gameover.style.display = 'none';
 
@@ -119,6 +136,7 @@ function newBeam() {
         y: beamPos.y
     }
     beamPath.push( corner )
+    paintStars()
 }
 
 // Initialise the game's state
@@ -129,6 +147,8 @@ function initState( timestamp ) {
     height = game.offsetHeight;
     game.width = width
     game.height = height
+    stars.width = width
+    stars.height = height
 
     newBeam()
 
@@ -141,8 +161,6 @@ function initState( timestamp ) {
 function gameOver() {
     // Show the game over screen ...
     gameover.style.display = 'block';
-    game.style.display = 'none';
-    booth.style.display = 'none';
 }
 
 // Returns to the booth
@@ -151,6 +169,7 @@ function back() {
     // Show the game over screen ...
     booth.style.display = 'block';
     game.style.display = 'none';
+    stars.style.display = 'none';
     gameover.style.display = 'none';
 }
 
