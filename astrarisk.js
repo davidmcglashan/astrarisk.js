@@ -2,11 +2,15 @@
 // Game state stuff!
 // We need to know the canvas dimensions to calculate some of this ...
 // ==============================================================================================
-var game = document.getElementById( 'game' )
-var width = game.offsetWidth;
-var height = game.offsetHeight;
 
-// Simple object to track the beam's position
+// refs for the major scene elements
+var gameover = document.getElementById( 'gameover' )
+var booth = document.getElementById( 'booth' )
+var game = document.getElementById( 'game' )
+
+// Globals for screen dimensions, etc.
+var width = 0;
+var height = 0;
 var state = {
     x: 0,
     y: 0
@@ -28,6 +32,13 @@ function beam( delta ) {
     } else {
         state.y += delta/2
     }
+
+    // Have we gone out of bounds top and bottom?
+    if ( state.y < 0 || state.y > height ) {
+        return true
+    }
+
+    return false
 }
 
 // ==============================================================================================
@@ -59,18 +70,26 @@ var lastRender = 0
 // =======================
 function loop( now ) {
     // Move the beam along and repaint the canvas
-    beam( now - lastRender )
+    isGameOver = beam( now - lastRender )
     paint()
 
-    lastRender = now
-    window.requestAnimationFrame( loop )
+    if ( !isGameOver ) {
+        lastRender = now
+        window.requestAnimationFrame( loop )
+    } else {
+        gameOver()
+    }
 }
 
 // Start the game!
 // ===============
 function play() {
-    // Make the canvas visible
+    // Make the canvas visible, hide the booth ...
     game.style.display = 'block';
+    booth.style.display = 'none';
+    gameover.style.display = 'none';
+
+    // kick off the game loops
     window.requestAnimationFrame( initDisplay )    
 }
 
@@ -88,6 +107,24 @@ function initDisplay( timestamp ) {
 
     lastRender = timestamp
     window.requestAnimationFrame( loop )    
+}
+
+// End the game!
+// ===============
+function gameOver() {
+    // Show the game over screen ...
+    gameover.style.display = 'block';
+    game.style.display = 'none';
+    booth.style.display = 'none';
+}
+
+// Returns to the booth
+// ===============
+function back() {
+    // Show the game over screen ...
+    booth.style.display = 'block';
+    game.style.display = 'none';
+    gameover.style.display = 'none';
 }
 
 // ==============================================================================================
