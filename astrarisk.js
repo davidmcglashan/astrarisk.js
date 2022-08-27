@@ -26,6 +26,9 @@ var beamPath = []
 // Moves the beam
 // =====================
 function beam( delta ) {
+    ox = beamPos.x
+    oy = beamPos.y
+
     // Add a new corner to the path if there has been a change in pressing state
     if ( isPressing !== wasPressing ) {
         var corner = {
@@ -42,6 +45,13 @@ function beam( delta ) {
         beamPos.y -= delta*tick
     } else {
         beamPos.y += delta*tick
+    }
+
+    pxls = starGfx.getImageData( ox, oy, beamPos.x-ox, beamPos.y-oy ).data
+    for ( i = 0; i < pxls.length; i++ ) {
+        if ( pxls[i] != 0 ) {
+            return true
+        }
     }
 
     // Have we gone through the aperture or into the wall?
@@ -109,7 +119,7 @@ function paintStars() {
     // Now draw the stars
     deg36 = 0.628319
 
-    for ( var i = 0; i < 100 + level*3; i++ ) {
+    for ( var i = 0; i < 10 + level*3; i++ ) {
         x = Math.random() * (0.8 * width) + 0.15*width
         y = Math.random() * (0.9 * height) + 0.05*height
         size = Math.random() * ( height * 0.015 ) + height * 0.015
@@ -149,8 +159,6 @@ var tick = 0
 // Very simple: work out time diff, update everything, paint everything, repeat until death
 // =======================
 function loop( now ) {
-    console.log( now )
-
     // Move the beam along and repaint the canvas
     isGameOver = beam( now - lastRender )
     paintBeam()
