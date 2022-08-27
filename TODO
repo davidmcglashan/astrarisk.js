@@ -9,3 +9,11 @@ Start game/stop game
 spacey backgrounds (transparent canvas?)
 
 Game loop
+- stack of up/down points
+
+Guide beam to exit
+- speed should be a function of width? i.e. it always takes 5 seconds to cross irrespective of width
+
+Draw stars
+
+Collide with stars!
