@@ -10,26 +10,30 @@ body {
 
 #gameover {
 	display: block;
-	top: 25%;
+	top: 50%;
+	transform: translateY(-50%);
 	width: 100%;
-	padding: 3em 0em;
+	padding: 0 0 2em 0;
 	background: rgba(0,0,0,0.5);
 	text-align: center;
 	color: #fff;
 }
 
 #booth {
-	color: #fff;
-	text-align: center;
-	top: 25%;
+	position: absolute;
 	display: block;
+	overflow: hidden;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100%;
+	padding: 0 0 2em 0;
+	text-align: center;
+	color: #fff;
 }
 
 h1 {
-	font-size: 4em;
-}
-h2 {
-	margin-top: 3em;
+	font-size: 7em;
+	margin: 0;
 }
 
 a {
@@ -43,7 +47,9 @@ a.primary {
 	background: white;
 }
 a.secondary {
-	background: #aaaaff;
+	margin-right: 2em;
+	background: #545490;
+	color: #ddd;
 }
 
 #gameover,
