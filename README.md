@@ -1,2 +1,5 @@
 # astrarisk.js
- Astrarisk but in Javascript
+
+Astrarisk but in Javascript
+
+[Play it here](https://david.mcglashan.net/astrarisk.js/)
