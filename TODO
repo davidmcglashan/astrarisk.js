@@ -1,16 +1,38 @@
 TODO
 ====
 
+Guide beam to exit
+- speed should be a function of width? i.e. it always takes 5 seconds to cross irrespective of width
+- draw frame
+- check collisions with right hand wall
+
+Draw stars
+- random centre, random(36) for rotation
+- 10 points, 36 degrees apart
+- every second point is 2 to 1.5 times further away
+- plot path, fill shape
+- draw frame on same canvas below the game
+
+Collide with stars!
+
+Level counter
+
+Track high scores
+- keep in localstorage
+- different score per screen dimensions
+
 decent booth
 
 Start game/stop game
 - countdown loop
 
-Guide beam to exit
-- speed should be a function of width? i.e. it always takes 5 seconds to cross irrespective of width
-
+Animate level transitions
 spacey backgrounds
+other effects
 
-Draw stars
-
-Collide with stars!
+mobile
+- Always in landscape?
+- Game doesn't respond to touch
+  - https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
+- is there a way to get rid of browser chrome on iOS?
+  - https://stackoverflow.com/questions/4117377/how-do-i-hide-the-address-bar-on-iphone
