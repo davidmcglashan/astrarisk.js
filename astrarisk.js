@@ -122,7 +122,7 @@ function paintStars() {
     for ( var i = 0; i < 10 + level*3; i++ ) {
         x = Math.random() * (0.8 * width) + 0.15*width
         y = Math.random() * (0.9 * height) + 0.05*height
-        size = Math.random() * ( height * 0.015 ) + height * 0.015
+        size = Math.random() * ( width * 0.015 ) + width * 0.015
         theta = Math.random() * deg36 * 2
 
         starGfx.beginPath()
