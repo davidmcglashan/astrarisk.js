@@ -8,6 +8,7 @@ var gameover = document.getElementById( 'gameover' )
 var kiosk = document.getElementById( 'kiosk' )
 var game = document.getElementById( 'game' )
 var stars = document.getElementById( 'stars' )
+var info = document.getElementById( 'info' )
 
 // Globals for screen dimensions, etc.
 var width = 0;
@@ -65,6 +66,7 @@ function beam( delta ) {
 
         // through the aperture!
         level += 1
+        info.innerHTML = 'level ' + level
         newBeam()
         return false
     }
@@ -181,8 +183,10 @@ function play() {
     stars.style.display = 'block';
     kiosk.style.display = 'none';
     gameover.style.display = 'none';
+    info.style.display = 'block';
     beamPos.y = 0
     level = 1
+    info.innerHTML = 'level ' + level
 
     // kick off the game loops
     window.requestAnimationFrame( initState )    
@@ -245,6 +249,7 @@ function back() {
     game.style.display = 'none';
     stars.style.display = 'none';
     gameover.style.display = 'none';
+    info.style.display = 'none';
 }
 
 // ==============================================================================================

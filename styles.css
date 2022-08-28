@@ -2,6 +2,7 @@ body {
 	font-family: 'MuseoModerno';
 	overflow: hidden;
 	user-select: none;
+	color: #fff;
 }
 
 #backcloth {
@@ -17,7 +18,6 @@ body {
 	padding: 0 0 2em 0;
 	background: rgba(0,0,0,0.65);
 	text-align: center;
-	color: #fff;
 }
 
 #gameover p {
@@ -35,7 +35,6 @@ body {
 	width: 100%;
 	padding: 0 0 2em 0;
 	text-align: center;
-	color: #fff;
 }
 
 h1 {
@@ -46,12 +45,12 @@ h1 {
 a {
 	padding: 0.5em 1em;
 	border-radius: 0.5em;
-	color: black;
 	text-decoration: none;	
 }
 
 a.primary {
 	background: white;
+	color: black;
 }
 a.secondary {
 	margin-right: 2em;
@@ -77,4 +76,19 @@ a.secondary {
 	width: 100%;
 	height: 100%;
 	display: block
+}
+
+#info {
+	position: absolute;
+	top: 0;
+	font-size: 2em;
+	padding: 2%;
+	display: none;	
+}
+
+#credits {
+	position: absolute;
+	bottom: 0;
+	font-size: 0.9em;
+	padding: 2%;
 }
