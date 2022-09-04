@@ -27,14 +27,26 @@ body {
 }
 
 #kiosk {
-	position: absolute;
-	display: block;
-	overflow: hidden;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 100%;
-	padding: 0 0 2em 0;
 	text-align: center;
+}
+
+#highscores {
+	padding-top: 2em;
+}
+
+#scoreslist {
+	list-style-type: none;
+	padding-inline-start: 0;
+}
+
+a {
+	color:  #ff8;
+	text-decoration: none;
+}
+a:hover,
+a:focus {
+	color:  #ff8;
+	text-decoration: underline;
 }
 
 h1 {

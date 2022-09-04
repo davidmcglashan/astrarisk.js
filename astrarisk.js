@@ -209,6 +209,15 @@ function newBeam() {
     paintStars()
 }
 
+// Resizes the window to a high score size
+// =======================================
+function playScore( dim ) {
+    var i = dim.indexOf('x')
+    var w = dim.substring( 0, i )
+    var h = dim.substring( i+1, dim.length )
+    window.resizeTo( w, h )
+}
+
 // Initialise the game's state
 // ===========================
 function initState( timestamp ) {
@@ -237,6 +246,20 @@ function gameOver() {
     var levelSpan = document.getElementById( 'level' )
     levelSpan.innerHTML = level
 
+    // Do the high score malarky!
+    oldHigh = localStorage.getItem( width+'x'+height+'_hiscore' )
+    if ( oldHigh === undefined ) {
+        oldHigh = 0
+    }
+
+    var newHigh = document.getElementById( 'newhighscore' )
+    if ( level > oldHigh ) {
+        newHigh.style.display = 'inline'
+        localStorage.setItem( width+'x'+height+'_hiscore', level )
+    } else {
+        newHigh.style.display = 'none'
+    }
+
     // Show the game over screen ...
     gameover.style.display = 'block';
 }
@@ -250,6 +273,26 @@ function back() {
     stars.style.display = 'none';
     gameover.style.display = 'none';
     info.style.display = 'none';
+
+    // Hide the highscores ...
+    var highscores = document.getElementById( 'highscores' )
+    highscores.style.display = 'none'
+
+    // ... and show them it we find any!
+    var scoreslist = document.getElementById( 'scoreslist' )
+    for ( const[key, value] of Object.entries( localStorage ) ) {
+        if ( key.indexOf( '_hiscore' ) !== -1 ) {
+            var a = document.createElement( 'a' )
+            var k = key.substring(0, key.length - 8);
+            a.innerHTML = k + ' &mdash; level ' + value
+            a.setAttribute( 'href', 'javascript:playScore("'+k+'");')
+            var li = document.createElement( 'li' )
+            li.appendChild( a )
+
+            scoreslist.appendChild( li )
+            highscores.style.display = 'block'
+        }
+    }
 }
 
 // ==============================================================================================
@@ -273,3 +316,6 @@ document.addEventListener( "mousedown", isPressing );
 document.addEventListener( "mouseup", isPressing );
 document.addEventListener( "touchstart", function() { isPressing = true } )
 document.addEventListener( "touchend", function() { isPressing = false } )
+
+// Call back() to set up the kiosk properly
+back()
