@@ -1,9 +1,6 @@
 TODO
 ====
 
-countdown loop
-- progress bar with anim (draw the stars, show "get ready", progress bar)
-
 Sort out mobile pausing/selection issue
 
 Detect platform in index and redirect to game if mobile

@@ -105,12 +105,35 @@ function paintBeam() {
     gameGfx.stroke()
 }
 
+// Draws the beam
+// ===========================
+function paintCountdown() {
+    gameGfx.clearRect( 0, 0, width, height );
+    gameGfx.lineWidth = 5
+
+    // Always three circles for the lamp rims
+    gameGfx.strokeStyle = "#999aaa"
+    for ( var x=0; x<3; x++ ) {
+        gameGfx.beginPath();
+        gameGfx.arc( 100+x*100, height/2, 25, 0, 2*Math.PI );
+        gameGfx.stroke();
+    }
+
+    // Fill the ones that apply to the countdown so far.
+    gameGfx.fillStyle = "#ff0000"
+    for ( var x=0; x<(countdown/1000)-1; x++ ) {
+        gameGfx.beginPath();
+        gameGfx.arc( 100+x*100, height/2, 15, 0, 2*Math.PI );
+        gameGfx.fill();
+    }
+}
+
 // Draws the stars
 // ===========================
 function paintStars() {
     // Draw the frame
     starGfx.clearRect( 0, 0, width, height );
-    starGfx.strokeStyle = "#40d060"
+    starGfx.strokeStyle = "#dd6644"
     starGfx.lineWidth = 5
 
     starGfx.beginPath()
@@ -158,6 +181,7 @@ function paintStars() {
 // in 1 millisecond
 var lastRender = 0
 var tick = 0
+var countdown = 0
 
 // Main game loop function. 
 // Very simple: work out time diff, update everything, paint everything, repeat until death
@@ -175,6 +199,21 @@ function loop( now ) {
     }
 }
 
+// Countdown before a level begins
+// =======================
+function countdownLoop( now ) {
+    delta = now - lastRender 
+    countdown -= delta
+    
+    paintCountdown()
+    lastRender = now
+    if ( countdown > 0 ) {
+        window.requestAnimationFrame( countdownLoop )
+    } else {
+        window.requestAnimationFrame( loop )
+    }
+}
+
 // Start the game!
 // ===============
 function play() {
@@ -184,8 +223,6 @@ function play() {
     kiosk.style.display = 'none';
     gameover.style.display = 'none';
     info.style.display = 'block';
-    beamPos.y = 0
-    level = 1
     info.innerHTML = 'level ' + level
 
     // kick off the game loops
@@ -228,6 +265,10 @@ function initState( timestamp ) {
     game.height = height
     stars.width = width
     stars.height = height
+
+    beamPos.y = 0
+    level = 1
+    countdown = 4000
     
     // margin and aperture depend on the screen dimensions
     margin = width * 0.015
@@ -237,7 +278,7 @@ function initState( timestamp ) {
 
     lastRender = timestamp
     tick = width/5000
-    window.requestAnimationFrame( loop )    
+    window.requestAnimationFrame( countdownLoop )    
 }
 
 // End the game!
