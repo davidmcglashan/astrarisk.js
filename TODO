@@ -1,18 +1,24 @@
 TODO
 ====
 
-Track high scores
-- keep in localstorage
-- different score per screen dimensions
-
 countdown loop
 - progress bar with anim (draw the stars, show "get ready", progress bar)
 
+Sort out mobile pausing/selection issue
+
+Detect platform in index and redirect to game if mobile
+
 Animate level transitions
 spacey backgrounds
-other effects
+explosions
+
+remove high scores
+
+Game jazz on index.html
 
 mobile
+- icons
 - Always in landscape?
 - is there a way to get rid of browser chrome on iOS?
   - https://stackoverflow.com/questions/4117377/how-do-i-hide-the-address-bar-on-iphone
+

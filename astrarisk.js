@@ -247,7 +247,8 @@ function gameOver() {
     levelSpan.innerHTML = level
 
     // Do the high score malarky!
-    oldHigh = localStorage.getItem( width+'x'+height+'_hiscore' )
+    key = window.outerWidth + 'x' + window.outerHeight + '_hiscore' 
+    oldHigh = localStorage.getItem( key )
     if ( oldHigh === undefined ) {
         oldHigh = 0
     }
@@ -255,7 +256,7 @@ function gameOver() {
     var newHigh = document.getElementById( 'newhighscore' )
     if ( level > oldHigh ) {
         newHigh.style.display = 'inline'
-        localStorage.setItem( width+'x'+height+'_hiscore', level )
+        localStorage.setItem( key, level )
     } else {
         newHigh.style.display = 'none'
     }
@@ -280,6 +281,10 @@ function back() {
 
     // ... and show them it we find any!
     var scoreslist = document.getElementById( 'scoreslist' )
+    while ( scoreslist.firstChild ) {
+        scoreslist.firstChild.remove() 
+    }
+
     for ( const[key, value] of Object.entries( localStorage ) ) {
         if ( key.indexOf( '_hiscore' ) !== -1 ) {
             var a = document.createElement( 'a' )
