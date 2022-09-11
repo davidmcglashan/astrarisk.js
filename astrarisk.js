@@ -262,6 +262,7 @@ function play() {
     kiosk.style.display = 'none';
     gameover.style.display = 'none';
     info.style.display = 'block';
+    level = 1
     info.innerHTML = 'level ' + level
 
     // kick off the game loops
@@ -306,7 +307,6 @@ function initState( timestamp ) {
     stars.height = height
 
     beamPos.y = 0
-    level = 1
     countdown = 4000
     
     // margin and aperture depend on the screen dimensions
@@ -330,8 +330,7 @@ function gameOver() {
             x: beamPos.x,
             y: beamPos.y,
             dx: 2*Math.random()-1,
-            dy: 2*Math.random()-1,
-            alpha: 1
+            dy: 2*Math.random()-1
         }
         particles.push( p )
     }
