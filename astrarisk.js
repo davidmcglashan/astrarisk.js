@@ -50,11 +50,15 @@ function beam( delta ) {
 
     // Have we collided with a star? Check for non-zero pixels in the space we've
     // just moved through. This is _usually_ a tiny (2x2 or 3x3) square
-    pxls = starGfx.getImageData( ox, oy, beamPos.x-ox, beamPos.y-oy ).data
-    for ( i = 0; i < pxls.length; i++ ) {
-        if ( pxls[i] != 0 ) {
-            return true
+    try {
+        pxls = starGfx.getImageData( ox, oy, beamPos.x-ox, beamPos.y-oy ).data
+        for ( i = 0; i < pxls.length; i++ ) {
+            if ( pxls[i] != 0 ) {
+                return true
+            }
         }
+    } catch( error ) {
+        console.error( { ox:ox, oy:oy, bx:beamPos.x-ox, by:beamPos.y-oy } )
     }
 
     // Have we gone through the aperture or into the wall?
@@ -105,8 +109,8 @@ function paintBeam() {
     gameGfx.stroke()
 }
 
-// Draws the beam
-// ===========================
+// Draws the countdown traffic lights
+// ==================================
 function paintCountdown() {
     gameGfx.clearRect( 0, 0, width, height );
     gameGfx.lineWidth = 5
@@ -125,6 +129,20 @@ function paintCountdown() {
         gameGfx.beginPath();
         gameGfx.arc( 100+x*100, height/2, 15, 0, 2*Math.PI );
         gameGfx.fill();
+    }
+}
+
+// Draws the end game explosion
+// ============================
+function paintExplosion() {
+    gameGfx.clearRect( 0, 0, width, height );
+    gameGfx.strokeStyle = "#40d060"
+    gameGfx.lineWidth = 5
+
+    for ( const p of particles ) {
+        gameGfx.beginPath();
+        gameGfx.rect( p.x-2, p.y-2, 4, 4 )
+        gameGfx.stroke()
     }
 }
 
@@ -214,6 +232,27 @@ function countdownLoop( now ) {
     }
 }
 
+// Loop for the end game explosion
+// ===============================
+function explosionLoop( now ) {
+    delta = now - lastRender 
+    countdown -= delta
+    
+    for ( const p of particles ) {
+        p.x += p.dx*delta/2
+        p.y += p.dy*delta/2
+    }
+
+    paintExplosion()
+    lastRender = now
+    if ( countdown > 0 ) {
+        window.requestAnimationFrame( explosionLoop )
+    } else {
+        endState()
+    }    
+}
+
+
 // Start the game!
 // ===============
 function play() {
@@ -281,9 +320,28 @@ function initState( timestamp ) {
     window.requestAnimationFrame( countdownLoop )    
 }
 
+// End the game with an explosion
+// ==============================
+var particles = []
+function gameOver() {
+    particles = []
+    for ( i=0; i<100; i++ ) {
+        var p = {
+            x: beamPos.x,
+            y: beamPos.y,
+            dx: 2*Math.random()-1,
+            dy: 2*Math.random()-1,
+            alpha: 1
+        }
+        particles.push( p )
+    }
+    countdown = 2000
+    window.requestAnimationFrame( explosionLoop )    
+}
+
 // End the game!
 // ===============
-function gameOver() {
+function endState() {
     var levelSpan = document.getElementById( 'level' )
     levelSpan.innerHTML = level
 
