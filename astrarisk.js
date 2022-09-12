@@ -23,6 +23,19 @@ var beamPos = {
     y: 0
 }
 var beamPath = []
+var dust = []
+
+
+// Moves the beam
+// =====================
+function moveDust( delta ) {
+    for ( const d of dust ) {
+        d.x -= d.speed*delta*0.25
+        if ( d.x < 0 ) {
+            d.x += width
+        }
+    }
+}
 
 // Moves the beam
 // =====================
@@ -90,10 +103,23 @@ function beam( delta ) {
 var gameGfx = game.getContext( '2d' )
 var starGfx = stars.getContext( '2d' )
 
+// Draws the stardust
+// ===========================
+function paintDust() {
+    gameGfx.clearRect( 0, 0, width, height );
+    gameGfx.lineWidth = 1
+
+    for ( const d of dust ) {
+        gameGfx.beginPath();
+        gameGfx.rect( d.x, d.y, 1, 1 )
+        gameGfx.strokeStyle = d.style
+        gameGfx.stroke()
+    }
+}
+
 // Draws the beam
 // ===========================
 function paintBeam() {
-    gameGfx.clearRect( 0, 0, width, height );
     gameGfx.beginPath();
     gameGfx.strokeStyle = "#40d060"
     gameGfx.lineWidth = 5
@@ -112,7 +138,6 @@ function paintBeam() {
 // Draws the countdown traffic lights
 // ==================================
 function paintCountdown() {
-    gameGfx.clearRect( 0, 0, width, height );
     gameGfx.lineWidth = 5
 
     // Always three circles for the lamp rims
@@ -135,7 +160,6 @@ function paintCountdown() {
 // Draws the end game explosion
 // ============================
 function paintExplosion() {
-    gameGfx.clearRect( 0, 0, width, height );
     gameGfx.strokeStyle = "#40d060"
     gameGfx.lineWidth = 5
 
@@ -207,6 +231,8 @@ var countdown = 0
 function loop( now ) {
     // Move the beam along and repaint the canvas
     isGameOver = beam( now - lastRender )
+    moveDust( now - lastRender )
+    paintDust()
     paintBeam()
 
     if ( !isGameOver ) {
@@ -222,8 +248,11 @@ function loop( now ) {
 function countdownLoop( now ) {
     delta = now - lastRender 
     countdown -= delta
-    
+    moveDust( delta )
+
+    paintDust()
     paintCountdown()
+
     lastRender = now
     if ( countdown > 0 ) {
         window.requestAnimationFrame( countdownLoop )
@@ -243,7 +272,10 @@ function explosionLoop( now ) {
         p.y += p.dy*delta/2
     }
 
+    moveDust( delta )
+    paintDust()
     paintExplosion()
+
     lastRender = now
     if ( countdown > 0 ) {
         window.requestAnimationFrame( explosionLoop )
@@ -308,7 +340,18 @@ function initState( timestamp ) {
 
     beamPos.y = 0
     countdown = 4000
-    
+
+    dust = []
+    for ( i=0; i<100; i++ ) {
+        var d = {
+            x: width*Math.random(),
+            y: height*Math.random(),
+            speed: 0.25 + Math.random()/2,
+            style: "(" + 192+64*Math.random()/2 + "," + 192+64*Math.random()/2 + "," + 192+64*Math.random()/2 + "," + 0.5*Math.random()/2 + ")"
+        }
+        dust.push( d )
+    }
+
     // margin and aperture depend on the screen dimensions
     margin = width * 0.015
     aperture = height * 0.2
