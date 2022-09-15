@@ -1,13 +1,14 @@
 TODO
 ====
 
-Sort out mobile pausing/selection issue
-
-Detect platform in index and redirect to game if mobile
-
-Animate level transitions
 spacey backgrounds
 - SVG planets etc. animated with CSS
+
+Sort out mobile pausing/selection issue
+- pausing seemed to be the image array issue
+- selection persists
+
+Animate level transitions
 
 remove high scores
 
@@ -19,3 +20,4 @@ mobile
 - is there a way to get rid of browser chrome on iOS?
   - https://stackoverflow.com/questions/4117377/how-do-i-hide-the-address-bar-on-iphone
 
+Detect platform in index and redirect to game if mobile
