@@ -1,7 +1,11 @@
+html {
+	user-select: none;
+	-webkit-user-select: none;
+}
+
 body {
 	font-family: 'MuseoModerno';
 	overflow: hidden;
-	user-select: none;
 	color: #fff;
 }
 

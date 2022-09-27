@@ -4,10 +4,6 @@ TODO
 spacey backgrounds
 - SVG planets etc. animated with CSS
 
-Sort out mobile pausing/selection issue
-- pausing seemed to be the image array issue
-- selection persists
-
 Animate level transitions
 
 remove high scores
@@ -16,8 +12,4 @@ Game jazz on index.html
 
 mobile
 - icons
-- Always in landscape?
-- is there a way to get rid of browser chrome on iOS?
-  - https://stackoverflow.com/questions/4117377/how-do-i-hide-the-address-bar-on-iphone
-
-Detect platform in index and redirect to game if mobile
+@media to resize the fonts for smaller screens
