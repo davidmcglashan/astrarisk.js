@@ -62,6 +62,7 @@ a {
 	padding: 0.5em 1em;
 	border-radius: 0.5em;
 	text-decoration: none;	
+	white-space: nowrap;
 }
 
 a.primary {
@@ -107,4 +108,23 @@ a.secondary {
 	bottom: 0;
 	font-size: 0.9em;
 	padding: 2%;
+}
+
+/* A handful of size adjustments for smaller screens (my iPhone SE) */
+@media only screen and (max-width: 800px) {
+	h1 {
+		font-size: 4em;
+	}
+	#gameover p {
+		font-size: 1em;
+	}
+	a.primary,a.secondary {
+	    font-size: 0.75em;
+	}
+	#highscores {
+    	padding-top: 1em;
+    }
+    #info {
+    	font-size: 1em;
+    }
 }
